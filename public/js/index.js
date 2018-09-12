@@ -17,6 +17,6 @@ var socket = io();
                 });
 
                 socket.on('newMessage', function (message) {
-                    console.log(`Get message from ${message.from}`);
+                    console.log(`Got a Message from ${message.from}`);
                     console.log(`Meassage - ${message.text}`);
                 });
