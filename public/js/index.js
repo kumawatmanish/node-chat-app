@@ -2,10 +2,6 @@ var socket = io();
                 socket.on('connect' , function ()  {
                     console.log('Connected to Server');
 
-                   /* socket.emit('createMessage', {
-                        from: 'kumawat@example.com',
-                        text: 'Should work.'
-                    });*/
                 });
 
                 socket.on('disconnect', function () {
@@ -29,4 +25,17 @@ var socket = io();
                     }, function () {
 
                     });
+                });
+
+                var locationButton = jQuery('#send-location');
+                locationButton.on('click' , function () {
+                    if(!navigator.geolocation) {
+                          return alert("Geolocation not supported by Browser"); 
+                    }
+                    navigator.geolocation.getCurrentPosition(function (position) { 
+                        console.log(position);
+                    });
+                }, function (e) {
+                    console.log(e)
+                          alert("Unable to fetch location");
                 });
