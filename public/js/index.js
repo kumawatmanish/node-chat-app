@@ -9,12 +9,14 @@ var socket = io();
                 });
 
                 socket.on('newMessage', function (message) {
-                    //console.log(`Got a Message from ${message.from}`);
-                    //console.log(`Meassage - ${message.text}`);
                     var formatedTime = moment(message.createdAt).format('h:mm a'); 
-                    var li = jQuery('<li></li>');
-                    li.text(`${message.from} ${formatedTime}: ${message.text}`);
-                    jQuery('#messages').append(li);
+                    var template = jQuery('#message-template').html();
+                    var html = Mustache.render(template, {
+                        text: message.text,
+                        from: message.from,
+                        createdAt: formatedTime
+                    });
+                    jQuery('#messages').append(html);
                 });
                 
                 jQuery('#message-form').on('submit', function (e) {
