@@ -21,14 +21,19 @@ io.on('connection', (socket) => {
 
     socket.broadcast.emit('newMessage', generateMessage('Admin', 'New User joined'));
     
-    socket.on('createMessage', (message) => {
+    socket.on('createMessage', (message, callback) => {
         console.log('Message', message);
         io.emit('newMessage', generateMessage(message.from, message.text));
+        callback();
+    });
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newMessage',generateMessage(coords.longitude, coords.latitude));
+    });    
                 
     socket.on('disconnect', () => {
         console.log('User was disconnected');
     });
-});
 });
 server.listen(port, () => {
     console.log(`Server is up on port ${port}`);

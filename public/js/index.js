@@ -23,7 +23,7 @@ var socket = io();
                         from: "User",
                         text: jQuery('[name=message]').val()
                     }, function () {
-
+                        jQuery('[name=message]').val('')
                     });
                 });
 
@@ -33,9 +33,11 @@ var socket = io();
                           return alert("Geolocation not supported by Browser"); 
                     }
                     navigator.geolocation.getCurrentPosition(function (position) { 
-                        console.log(position);
+                          socket.emit('createLocationMessage', {
+                              longitude: 576.21,
+                              latitude: 75.45
+                          });
                     });
-                }, function (e) {
-                    console.log(e)
+                }, function () {
                           alert("Unable to fetch location");
                 });
