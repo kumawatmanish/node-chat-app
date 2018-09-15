@@ -9,11 +9,11 @@ var socket = io();
                 });
 
                 socket.on('newMessage', function (message) {
-                    console.log(`Got a Message from ${message.from}`);
-                    console.log(`Meassage - ${message.text}`);
-
+                    //console.log(`Got a Message from ${message.from}`);
+                    //console.log(`Meassage - ${message.text}`);
+                    var formatedTime = moment(message.createdAt).format('h:mm a'); 
                     var li = jQuery('<li></li>');
-                    li.text(`${message.from}: ${message.text}`);
+                    li.text(`${message.from} ${formatedTime}: ${message.text}`);
                     jQuery('#messages').append(li);
                 });
                 
