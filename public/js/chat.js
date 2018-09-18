@@ -14,13 +14,29 @@ function scrollToBottom () {
     }
 
 };
-                socket.on('connect' , function ()  {
-                    console.log('Connected to Server');
+                    socket.on('connect' , function ()  {
+                    var params = jQuery.deparam(window.location.search);
 
+                    socket.emit('join', params, function (err) {
+                        if(err){
+                            alert(err);
+                            window.location.href = '/';
+                        }else{
+                            console.log('No error');
+                        }
+                    });
                 });
 
                 socket.on('disconnect', function () {
                     console.log('Disconnected from Server');
+                });
+
+                socket.on('updateUserList', function (users) {
+                    var ol = jQuery('<ol></ol>');
+                    users.forEach(function (user) {
+                        ol.append(jQuery('<li></li>').text(user));
+                    });
+                    jQuery('#users').html(ol);
                 });
 
                 socket.on('newMessage', function (message) {
@@ -45,7 +61,7 @@ function scrollToBottom () {
                     });
                 });
 
-                var locationButton = jQuery('#send-location');
+                /*var locationButton = jQuery('#send-location');
                 locationButton.on('click' , function () {
                     if(!navigator.geolocation) {
                           return alert("Geolocation not supported by Browser"); 
@@ -58,4 +74,4 @@ function scrollToBottom () {
                     });
                 }, function () {
                           alert("Unable to fetch location");
-                });
+                });*/
